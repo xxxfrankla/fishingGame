@@ -3,6 +3,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -24,11 +25,11 @@ public class User {
         this.userName = userName;
     }
 
-    public int getCoins() {
+    public BigDecimal getCoins() {
         return coins;
     }
 
-    public void setCoins(int coins) {
+    public void setCoins(BigDecimal coins) {
         this.coins = coins;
     }
 
@@ -85,7 +86,7 @@ public class User {
     private String userId; // 用户ID
 
     private String userName; // 用户名
-    private int coins; // 用户金币数量
+    private BigDecimal coins = BigDecimal.ZERO; // 用户金币数量
     private int diamonds; // 用户钻石数量
     private int level; // 用户等级
     private int currentExperience; // 当前经验值

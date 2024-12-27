@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+//implement method to be called by controller
 @Service
 public class UserService {
 

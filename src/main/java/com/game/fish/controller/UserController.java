@@ -2,7 +2,9 @@ package com.game.fish.controller;
 
 import com.game.fish.model.User;
 import com.game.fish.service.UserService;
+import com.game.fish.service.FishService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -24,6 +27,10 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private FishService fishService;
+
 
     @GetMapping
     public Map<String, Object> defaultMapping() {
@@ -53,7 +60,7 @@ public class UserController {
             return Map.of("code", 409, "msg", "Already exist");
         }
 
-        user.setCoins(0);
+        user.setCoins(BigDecimal.ZERO);
         user.setDiamonds(0);
         user.setLevel(1);
         user.setCurrentExperience(0);
@@ -155,5 +162,7 @@ public class UserController {
                 )
         );
     }
+
+
 
 }

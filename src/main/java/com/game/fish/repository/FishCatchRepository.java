@@ -15,7 +15,7 @@ import java.util.List;
 public interface FishCatchRepository extends JpaRepository<FishCatch, Long>{
     boolean existsByUserId(Long userId);
 
-    @Query("SELECT COALESCE(SUM(fc.weight * fc.price), 0) FROM FishCatch fc WHERE fc.userId = :userId")
+    @Query("SELECT COALESCE(SUM(fc.price), 0) FROM FishCatch fc WHERE fc.userId = :userId")
     BigDecimal calculateValue(Long userId);
 
     @Modifying

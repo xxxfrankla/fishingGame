@@ -41,7 +41,7 @@ public class UserController {
 
     // 用户存在检查
     @GetMapping("/is-exist")
-    public Map<String, Object> checkUserExist(@RequestParam String userId) {
+    public Map<String, Object> checkUserExist(@RequestParam Long userId) {
         boolean exists = userService.userExists(userId);
         Map<String, Object> response = new HashMap<>();
         response.put("code", exists ? 200 : 404);
@@ -97,7 +97,7 @@ public class UserController {
     }
 
     @GetMapping("/basic")
-    public Map<String, Object> getUserBasic(@RequestParam String userId) {
+    public Map<String, Object> getUserBasic(@RequestParam Long userId) {
         Optional<User> user = userService.findUserById(userId);
         if (user.isEmpty()) {
             return Map.of("code", 404, "msg", "User not found");
@@ -113,7 +113,7 @@ public class UserController {
     }
 
     @GetMapping("/finance")
-    public Map<String, Object> getUserFinance(@RequestParam String userId) {
+    public Map<String, Object> getUserFinance(@RequestParam Long userId) {
         //coins, diamonds
         Optional<User> user = userService.findUserById(userId);
         if (user.isEmpty()) {
@@ -130,7 +130,7 @@ public class UserController {
     }
 
     @GetMapping("/level")
-    public Map<String, Object> getUserLevel(@RequestParam String userId) {
+    public Map<String, Object> getUserLevel(@RequestParam Long userId) {
         //level, current exp, exp to next level
         Optional<User> user = userService.findUserById(userId);
         if (user.isEmpty()) {
@@ -148,7 +148,7 @@ public class UserController {
     }
 
     @GetMapping("/inventory")
-    public Map<String, Object> getUserInventory(@RequestParam String userId) {
+    public Map<String, Object> getUserInventory(@RequestParam Long userId) {
         //fish inventory
         Optional<User> user = userService.findUserById(userId);
         if (user.isEmpty()) {

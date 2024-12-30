@@ -9,11 +9,11 @@ import java.util.List;
 @Entity
 public class User {
 
-    public String getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -83,7 +83,7 @@ public class User {
 
     @Id
     @Column(unique = true, nullable = false)
-    private String userId; // 用户ID
+    private Long userId; // 用户ID
 
     private String userName; // 用户名
     private BigDecimal coins = BigDecimal.ZERO; // 用户金币数量

@@ -14,11 +14,11 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public Optional<User> findUserById(String userId) {
+    public Optional<User> findUserById(Long userId) {
         return userRepository.findByUserId(userId);
     }
 
-    public boolean userExists(String userId) {
+    public boolean userExists(Long userId) {
         return userRepository.findByUserId(userId).isPresent();
     }
 

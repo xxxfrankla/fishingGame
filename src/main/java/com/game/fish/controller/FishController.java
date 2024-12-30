@@ -1,6 +1,7 @@
 package com.game.fish.controller;
 
 import com.game.fish.model.FishCatch;
+import com.game.fish.repository.FishCatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,9 @@ public class FishController {
 
     @Autowired
     private FishCatchService fishCatchService;
+
+    @Autowired
+    private FishCatchRepository fishCatchRepository;
 
     @GetMapping
     public ResponseEntity<List<Fish>> getAllActiveFishes() {
@@ -44,5 +48,11 @@ public class FishController {
     public ResponseEntity<BigDecimal> sellFish(@RequestParam Long userId) {
         BigDecimal total = fishService.sellFish(userId);
         return ResponseEntity.ok(total);
+    }
+
+    @GetMapping("/fish-catches")
+    public ResponseEntity<List<FishCatch>> getFishCatches(@RequestParam Long userId) {
+        List<FishCatch> fishCatches = fishCatchRepository.findAllByUserId(userId);
+        return ResponseEntity.ok(fishCatches);
     }
 }

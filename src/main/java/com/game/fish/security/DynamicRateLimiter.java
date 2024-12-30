@@ -23,7 +23,7 @@ public class DynamicRateLimiter implements Filter {
 
     private boolean shouldApplyRateLimiting(String path) {
         // Add paths that should be excluded from rate limiting
-        List<String> excludedPaths = List.of("/user/create", "/user/generate-token");
+        List<String> excludedPaths = List.of("/user/create", "/user/generate-token", "/shop/create");
 
         return !excludedPaths.contains(path);
     }

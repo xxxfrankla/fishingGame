@@ -13,8 +13,8 @@ public class FilterConfig {
     public FilterRegistrationBean<APITimestampFilter> apiTimestampFilter() {
         FilterRegistrationBean<APITimestampFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new APITimestampFilter());
-        //"/user/*","/fish/*",
-        registrationBean.addUrlPatterns(   "/shop/*"); // 需要拦截的路径
+        //"/user/*","/fish/*","/shop/*"
+        registrationBean.addUrlPatterns("/friend"); // 需要拦截的路径
         registrationBean.setOrder(1); // 设置优先级
         return registrationBean;
     }

@@ -16,7 +16,8 @@ public class APITimestampFilter implements Filter {
     private static final String API_PASSWORD = "default_password"; // 你可以改为从配置文件中读取
 
     @Override
-    public void doFilter(jakarta.servlet.ServletRequest request, jakarta.servlet.ServletResponse response, FilterChain chain)
+    public void doFilter(jakarta.servlet.ServletRequest request,
+                          jakarta.servlet.ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
         HttpServletRequest httpRequest = (HttpServletRequest) request;

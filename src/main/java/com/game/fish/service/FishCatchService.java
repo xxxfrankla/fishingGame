@@ -4,6 +4,7 @@ import com.game.fish.model.Fish;
 import com.game.fish.model.FishCatch;
 import com.game.fish.repository.FishCatchRepository;
 import com.game.fish.repository.FishRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ public class FishCatchService {
     @Autowired
     private FishCatchRepository fishCatchRepository;
     //catch fish
+    @Transactional
     public FishCatch catchFish(Long userId){
         List<Fish> fishList = fishRepository.findByStatus(true);
         if (fishList.isEmpty()) {

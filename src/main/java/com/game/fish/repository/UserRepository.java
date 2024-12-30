@@ -11,12 +11,18 @@ import org.springframework.stereotype.Repository;
 import java.math.BigDecimal;
 import java.util.Optional;
 @Repository
-public interface UserRepository extends JpaRepository<User, String> {
-    Optional<User> findByUserId(String userId);
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByUserId(Long userId);
 
     @Modifying
     @Transactional
     @Query("UPDATE User u SET u.coins = u.coins + :coin WHERE u.userId = :userId")
     void addCoinToUser(@Param("coin") BigDecimal coin, @Param("userId") Long userId);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE User u SET u.coins = u.coins - :coin WHERE u.userId = :userId AND u.coins >= :coin")
+    void subtractCoinsFromUser(@Param("coin") BigDecimal coin, @Param("userId") Long userId);
+
 }
 

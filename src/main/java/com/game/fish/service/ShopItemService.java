@@ -56,9 +56,9 @@ public class ShopItemService {
 
         if (!existingItems.isEmpty()) {
             // Aggregate quantity for the first found item
-            BoughtItem existingItem = existingItems.get(0); // Assume the first item is used for updating
             boughtItemRepository.addQuantityToBoughtItem(quantity, item.getCategory(), item.getName(), userId);
-            return existingItem;
+            userRepository.subtractCoinsFromUser(BigDecimal.valueOf(price), userId);
+            return existingItems.get(0);
         } else {
             // Deduct coins from the user and create a new BoughtItem
             userRepository.subtractCoinsFromUser(BigDecimal.valueOf(price), userId);

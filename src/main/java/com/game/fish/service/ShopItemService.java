@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,20 +32,40 @@ public class ShopItemService {
     public ShopItem saveItem(ShopItem item){return shopItemRepository.save(item);}
 
     @Transactional
-    public BoughtItem purchase(ShopItem item, int quantity, Long userId){
+    public BoughtItem purchase(ShopItem item, int quantity, Long userId) {
+        // Validate user
         Optional<User> user = userRepository.findByUserId(userId);
-        Double userCoin = user.get().getCoins().doubleValue();
-        if (quantity <= 0){
-            throw new RuntimeException("Can not purchase 0 or less.");
+        if (user.isEmpty()) {
+            throw new RuntimeException("User not found");
         }
+        Double userCoin = user.get().getCoins().doubleValue();
+
+        // Validate quantity
+        if (quantity <= 0) {
+            throw new RuntimeException("Cannot purchase 0 or less.");
+        }
+
+        // Calculate price and validate user's coins
         Double price = item.getCoins() * quantity;
-        if (userCoin < price){
+        if (userCoin < price) {
             throw new RuntimeException("Not enough coins");
         }
-        userRepository.subtractCoinsFromUser(BigDecimal.valueOf(price), userId);
-        BoughtItem product = boughtItemService.purchaseItem(item, quantity, userId);
-        return product;
+
+        // Fetch existing items matching product type and name for the user
+        List<BoughtItem> existingItems = boughtItemRepository.findByProductTypeAndProductName(item.getCategory(), item.getName());
+
+        if (!existingItems.isEmpty()) {
+            // Aggregate quantity for the first found item
+            BoughtItem existingItem = existingItems.get(0); // Assume the first item is used for updating
+            boughtItemRepository.addQuantityToBoughtItem(quantity, item.getCategory(), item.getName(), userId);
+            return existingItem;
+        } else {
+            // Deduct coins from the user and create a new BoughtItem
+            userRepository.subtractCoinsFromUser(BigDecimal.valueOf(price), userId);
+            return boughtItemService.purchaseItem(item, quantity, userId);
+        }
     }
+
 
     public ShopItem findItemByCategoryAndName(String category, String itemName){
         return shopItemRepository.findItemByCategoryAndName(category, itemName);

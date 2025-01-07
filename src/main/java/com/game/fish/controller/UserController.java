@@ -59,15 +59,6 @@ public class UserController {
         if (userService.userExists(user.getUserId())) {
             return Map.of("code", 409, "msg", "Already exist");
         }
-
-        user.setCoins(BigDecimal.ZERO);
-        user.setDiamonds(0);
-        user.setLevel(1);
-        user.setCurrentExperience(0);
-        user.setExperienceForNextLevel(100);
-        user.setRodType("basic");
-        user.setFishInventory(List.of());
-
         userService.createUser(user);
         return Map.of("code", 201, "msg", "Create Successful");
 
@@ -162,7 +153,4 @@ public class UserController {
                 )
         );
     }
-
-
-
 }

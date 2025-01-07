@@ -5,6 +5,8 @@ import  com.game.fish.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 //implement method to be called by controller
@@ -23,6 +25,13 @@ public class UserService {
     }
 
     public User createUser(User user) {
+        user.setCoins(BigDecimal.ZERO);
+        user.setDiamonds(0);
+        user.setLevel(1);
+        user.setCurrentExperience(0);
+        user.setExperienceForNextLevel(100);
+        user.setRodType("basic");
+        user.setFishInventory(List.of());
         return userRepository.save(user);
     }
 }

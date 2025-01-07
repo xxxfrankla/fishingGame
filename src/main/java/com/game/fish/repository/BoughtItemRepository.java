@@ -22,5 +22,4 @@ public interface BoughtItemRepository extends JpaRepository<BoughtItem, Long> {
                                  @Param("productType") String productType,
                                  @Param("productName") String productName,
                                  @Param("userId") Long userId);
-
 }

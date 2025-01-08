@@ -32,9 +32,9 @@ public class ShopController {
     @PostMapping("/purchase")
     public ResponseEntity<BoughtItem> purchase(@RequestParam String category,String productName,
                                              int amount,
-                                           Long id){
+                                           Long id, String userEmail, String username){
         ShopItem item = shopItemService.findItemByCategoryAndName(category, productName);
-        BoughtItem product = shopItemService.purchase(item, amount, id);
+        BoughtItem product = shopItemService.purchase(item, amount, id, userEmail, username);
         return ResponseEntity.ok(product);
     }
 }

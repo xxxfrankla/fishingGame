@@ -1,5 +1,6 @@
 package com.game.fish.service;
 
+import com.game.fish.config.RabbitConfig;
 import com.game.fish.model.BoughtItem;
 import com.game.fish.model.PurchaseInfo;
 import com.game.fish.model.ShopItem;
@@ -65,7 +66,8 @@ public class ShopItemService {
     }
 
     @Transactional
-    public BoughtItem purchase(ShopItem item, int quantity, Long userId) {
+    public BoughtItem purchase(ShopItem item, int quantity, Long userId, String userEmail,
+                               String username) {
         String lockKey = "shop_items_lock_" + userId + "_" + item.getName();
         ValueOperations<String, Object> ops = redisTemplate.opsForValue();
 
@@ -107,13 +109,16 @@ public class ShopItemService {
             userRepository.subtractCoinsFromUser(BigDecimal.valueOf(price), userId);
             i = boughtItemService.purchaseItem(item, quantity, userId);
         }
-        // Send purchase information to RabbitMQ queue
-        PurchaseInfo purchaseInfo = new PurchaseInfo(userId, item.getName(), item.getCategory(), price);
-        rabbitTemplate.convertAndSend(PURCHASE_QUEUE, purchaseInfo);
+        PurchaseInfo message = new PurchaseInfo();
+        message.setUserEmail(userEmail);
+        message.setUsername(username);
+        message.setItemName(item.getName());
+        message.setCategory(item.getCategory());
+
+        rabbitTemplate.convertAndSend(RabbitConfig.QUEUE_NAME, message);
 
         return i;
     }
-
 
     public ShopItem findItemByCategoryAndName(String category, String itemName){
         return shopItemRepository.findItemByCategoryAndName(category, itemName);

@@ -15,28 +15,28 @@ public class PurchaseInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Long userId;
+    @Column(name = "user_email", nullable = false)
+    private String userEmail;
 
-    @Column(nullable = false)
-    private String productName;
+    @Column(name = "username", nullable = false)
+    private String username;
 
-    @Column(nullable = false)
-    private String productType;
+    @Column(name = "item_name", nullable = false)
+    private String itemName;
 
-    @Column(nullable = false)
-    private Double coins;
+    @Column(name = "category", nullable = false)
+    private String category;
 
-    // Default constructor
+    // Default Constructor
     public PurchaseInfo() {
     }
 
     // Constructor with fields
-    public PurchaseInfo(Long userId, String productName, String productType, Double coins) {
-        this.userId = userId;
-        this.productName = productName;
-        this.productType = productType;
-        this.coins = coins;
+    public PurchaseInfo(String userEmail, String username, String itemName, String category) {
+        this.userEmail = userEmail;
+        this.username = username;
+        this.itemName = itemName;
+        this.category = category;
     }
 
     // Getters and Setters
@@ -48,35 +48,35 @@ public class PurchaseInfo {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getProductType() {
-        return productType;
+    public String getItemName() {
+        return itemName;
     }
 
-    public void setProductType(String productType) {
-        this.productType = productType;
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
-    public Double getCoins() {
-        return coins;
+    public String getCategory() {
+        return category;
     }
 
-    public void setCoins(Double coins) {
-        this.coins = coins;
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
